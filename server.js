@@ -76,12 +76,14 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// 导出Express应用（用于Vercel等平台）
-module.exports = app;
-
 // 本地运行时启动服务器
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`API代理服务器运行在端口 ${PORT}`);
   });
 }
+
+// Vercel部署导出
+module.exports = (req, res) => {
+  app(req, res);
+};
